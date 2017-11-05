@@ -3,6 +3,8 @@
 
 package edu.sxu.databases.invaders;
 
+import javafx.geometry.Rectangle2D;
+
 public class PlayerSprite extends PixelSprite
 {
     private static final String imageBits = 
@@ -18,5 +20,11 @@ public class PlayerSprite extends PixelSprite
     public PlayerSprite()
     {
         super(imageBits,imageBitsWidth);
+    }
+    
+    @Override
+    public void update(double time)
+    {
+        super.update(time);
     }
 }
