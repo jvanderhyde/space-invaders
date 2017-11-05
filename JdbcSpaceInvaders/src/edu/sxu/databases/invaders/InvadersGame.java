@@ -1,4 +1,5 @@
-
+//Main game class using JavaFX
+//Created by James Vanderhyde
 
 package edu.sxu.databases.invaders;
 
@@ -12,8 +13,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class InvadersGame extends javafx.application.Application
@@ -31,11 +30,7 @@ public class InvadersGame extends javafx.application.Application
         Scene theScene = new Scene( root );
         theStage.setScene( theScene );
         
-        WritableImage playerImage = new WritableImage(40,20);
-        for (int i=0; i<40; i++) for (int j=0; j<20; j++)
-            playerImage.getPixelWriter().setArgb(i, j, 0xffffffff);
-        Sprite player = new Sprite();
-        player.setImage(playerImage);
+        Sprite player = new PlayerSprite();
         player.setPosition(10, 350);
 
         Collection<String> input = new HashSet<>();
@@ -94,17 +89,6 @@ public class InvadersGame extends javafx.application.Application
                 gc.fillOval(x, y, 40, 40);
                 gc.setFill( Color.ORANGE );
                 gc.fillOval(160, 160, 80, 80);
-                
-                if (input.contains("LEFT"))
-                {
-                    gc.setFill( Color.RED );
-                    gc.setStroke( Color.WHITE );
-                    gc.setLineWidth(2);
-                    Font theFont = Font.font( "Times New Roman", FontWeight.BOLD, 48 );
-                    gc.setFont( theFont );
-                    gc.fillText( "Hello, World!", 60, 50 );
-                    gc.strokeText( "Hello, World!", 60, 50 );
-                }
                 
                 player.render(gc);
             }
