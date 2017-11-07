@@ -3,8 +3,10 @@
 
 package edu.sxu.databases.invaders;
 
+import static edu.sxu.databases.invaders.GameConstants.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -13,9 +15,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-import static edu.sxu.databases.invaders.GameConstants.*;
-import java.util.Iterator;
 
 public class InvadersGame extends javafx.application.Application
 {
@@ -30,34 +29,34 @@ public class InvadersGame extends javafx.application.Application
     private AlienSprite alien;
  
     @Override
-    public void start(Stage theStage) 
+    public void start(Stage stage) 
     {
-        theStage.setTitle("Invaders");
+        stage.setTitle("Invaders");
         Group root = new Group();
-        Scene theScene = new Scene( root );
-        theStage.setScene( theScene );
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
         
-        theScene.setOnKeyPressed((KeyEvent e) ->
+        scene.setOnKeyPressed((KeyEvent e) ->
         {
             String code = e.getCode().toString();
-            if ( !input.contains(code) )
-                input.add( code );
+            if (!input.contains(code))
+                input.add(code);
         });
  
-        theScene.setOnKeyReleased((KeyEvent e) ->
+        scene.setOnKeyReleased((KeyEvent e) ->
         {
             String code = e.getCode().toString();
-            input.remove( code );
+            input.remove(code);
         });
 
         Canvas canvas = new Canvas((BOARD_WIDTH+BORDER_RIGHT+BORDER_LEFT)*PIXEL_SCALE, BOARD_HEIGHT*PIXEL_SCALE);
-        root.getChildren().add( canvas );
+        root.getChildren().add(canvas);
 
         gc = canvas.getGraphicsContext2D();
 
         this.startLevel();
         
-        theStage.show();
+        stage.show();
     }    
     
     private void startLevel()
@@ -116,7 +115,7 @@ public class InvadersGame extends javafx.application.Application
             }
 
             //clear canvas
-            gc.setFill( Color.BLACK );
+            gc.setFill(Color.BLACK);
             gc.fillRect(0, 0, 1000, 1000);
 
             player.render(gc);
