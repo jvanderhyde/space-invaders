@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 
 public class PixelSprite extends Sprite
 {
-    public static int pixelMultiplier = 3;
+    public static int pixelMultiplier = GameConstants.PIXEL_SCALE;
     
     public PixelSprite(String pixels, int width)
     {

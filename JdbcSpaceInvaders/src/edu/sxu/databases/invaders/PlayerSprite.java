@@ -20,7 +20,7 @@ public class PlayerSprite extends PixelSprite
         super(imageBits,imageBitsWidth);
     }
     
-    public void update(double time, boolean left, boolean right, boolean up, boolean down, boolean fire)
+    public void update(double time, boolean left, boolean right, boolean up, boolean down, boolean fire1, boolean fire2)
     {
         this.setVelocity(0,0);
         if (left)

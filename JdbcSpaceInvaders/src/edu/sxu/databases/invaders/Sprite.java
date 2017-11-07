@@ -7,6 +7,7 @@ package edu.sxu.databases.invaders;
 import javafx.scene.image.Image;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.paint.Color;
 
 public class Sprite
 {
@@ -17,14 +18,6 @@ public class Sprite
     private double velocityY;
     private double width;
     private double height;
-
-    public Sprite()
-    {
-        positionX = 0;
-        positionY = 0;    
-        velocityX = 0;
-        velocityY = 0;
-    }
 
     public void setImage(Image i)
     {
@@ -66,6 +59,8 @@ public class Sprite
     public void render(GraphicsContext gc)
     {
         gc.drawImage( image, positionX, positionY );
+        gc.setStroke(Color.RED);
+        gc.strokeRect(positionX, positionY, width, height);
     }
 
     public Rectangle2D getBoundary()

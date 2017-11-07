@@ -14,11 +14,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import static edu.sxu.databases.invaders.GameConstants.*;
+
 public class InvadersGame extends javafx.application.Application
 {
     public static void main(String[] args) 
     {
-        launch(args);
+        InvadersGame.launch(args);
     }
  
     @Override
@@ -50,7 +52,7 @@ public class InvadersGame extends javafx.application.Application
             input.remove( code );
         });
 
-        Canvas canvas = new Canvas( 400, 400 );
+        Canvas canvas = new Canvas((BOARD_WIDTH+BORDER_RIGHT+BORDER_LEFT)*PIXEL_SCALE, BOARD_HEIGHT*PIXEL_SCALE);
         root.getChildren().add( canvas );
 
         final GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -69,7 +71,8 @@ public class InvadersGame extends javafx.application.Application
                 lastNanoTime = currentNanoTime;
                 
                 player.update(elapsedTime,input.contains("LEFT"),input.contains("RIGHT"),
-                        input.contains("UP"),input.contains("DOWN"),input.contains("SPACE"));
+                        input.contains("UP"),input.contains("DOWN"),
+                        input.contains("SPACE"),input.contains("SHIFT"));
                 
                 alien.update(elapsedTime);
                 

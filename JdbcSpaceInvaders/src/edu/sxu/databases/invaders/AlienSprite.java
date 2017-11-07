@@ -5,7 +5,7 @@ package edu.sxu.databases.invaders;
 
 public class AlienSprite extends PixelSprite
 {
-    private static final String imageBits1 = 
+    private static final String imageBits2 = 
             "  o     o  "+
             "   o   o   "+
             "  ooooooo  "+
@@ -14,15 +14,15 @@ public class AlienSprite extends PixelSprite
             "o ooooooo o"+
             "o o     o o"+
             "   oo oo   ";
-    private static final int imageBitsWidth1 = 11;
-    private static final double speed = 10;
+    private static final int imageBitsWidth2 = 11;
+    private static final double speed = 50;
     
     private double direction = 1;
     private Bomb bomb;
     
     public AlienSprite(double x, double y, int type)
     {
-        super(imageBits1,imageBitsWidth1);
+        super(imageBits2,imageBitsWidth2);
         if ((type!=1) && (type!=2) && (type!=3))
             throw new IllegalArgumentException("Type must be 1, 2, or 3. ("+type+")");
         
@@ -33,13 +33,25 @@ public class AlienSprite extends PixelSprite
     
     public void moveDown()
     {
-        this.setVelocity(0, 10*speed);
+        this.setPosition(this.getBoundary().getMinX(), this.getBoundary().getMinY()+GameConstants.ALIEN_HEIGHT*pixelMultiplier);
     }
     
     public void reverseDirection()
     {
         this.direction = -1*this.direction;
         this.setVelocity(direction*speed, 0);
+    }
+    
+    @Override
+    public void update(double time)
+    {
+        if (((this.direction>0) && this.getBoundary().getMaxX()>(GameConstants.BOARD_WIDTH-GameConstants.BORDER_RIGHT)*pixelMultiplier) ||
+            ((this.direction<0) && this.getBoundary().getMinX()<(0+GameConstants.BORDER_LEFT)*pixelMultiplier))
+        {
+            this.moveDown();
+            this.reverseDirection();
+        }
+        super.update(time);
     }
     
     public Bomb getBomb()
