@@ -29,8 +29,9 @@ public class InvadersGame extends javafx.application.Application
         Scene theScene = new Scene( root );
         theStage.setScene( theScene );
         
-        Sprite player = new PlayerSprite();
+        PlayerSprite player = new PlayerSprite();
         player.setPosition(10, 350);
+        AlienSprite alien = new AlienSprite(10,100,2);
 
         Collection<String> input = new HashSet<>();
  
@@ -67,29 +68,17 @@ public class InvadersGame extends javafx.application.Application
                 double elapsedTime = (currentNanoTime - lastNanoTime) / 1e9;
                 lastNanoTime = currentNanoTime;
                 
-                double t = (currentNanoTime - startNanoTime) / 1e9; 
-
-                double x = 180 + 128 * Math.cos(t);
-                double y = 180 + 128 * Math.sin(t);
-
-                player.setVelocity(0,0);
-                if (input.contains("LEFT"))
-                    player.addVelocity(-50,0);
-                if (input.contains("RIGHT"))
-                    player.addVelocity(50,0);
+                player.update(elapsedTime,input.contains("LEFT"),input.contains("RIGHT"),
+                        input.contains("UP"),input.contains("DOWN"),input.contains("SPACE"));
                 
-                player.update(elapsedTime);
+                alien.update(elapsedTime);
                 
                 //clear canvas
                 gc.setFill( Color.BLACK );
                 gc.fillRect(0, 0, 1000, 1000);
-                //draw earth and sun
-                gc.setFill( Color.BLUE );
-                gc.fillOval(x, y, 40, 40);
-                gc.setFill( Color.ORANGE );
-                gc.fillOval(160, 160, 80, 80);
                 
                 player.render(gc);
+                alien.render(gc);
             }
         }.start();
         

@@ -15,7 +15,7 @@ public class AlienSprite extends PixelSprite
             "o o     o o"+
             "   oo oo   ";
     private static final int imageBitsWidth1 = 11;
-    private static double speed = 10;
+    private static final double speed = 10;
     
     private double direction = 1;
     private Bomb bomb;

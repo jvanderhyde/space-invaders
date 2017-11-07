@@ -8,17 +8,26 @@ import javafx.scene.paint.Color;
 
 public class PixelSprite extends Sprite
 {
+    public static int pixelMultiplier = 3;
+    
     public PixelSprite(String pixels, int width)
     {
         Color monochrome = Color.WHITE;
-        WritableImage im = new WritableImage(width,pixels.length()/width);
+        WritableImage im = new WritableImage(pixelMultiplier*width,pixelMultiplier*pixels.length()/width);
         for (int i=0; i<pixels.length(); i++)
         {
             if (pixels.charAt(i)==' ')
-                im.getPixelWriter().setColor(i%width, i/width, Color.TRANSPARENT);
+                colorPixel(im, i%width, i/width, Color.TRANSPARENT);
             else
-                im.getPixelWriter().setColor(i%width, i/width, monochrome);
+                colorPixel(im, i%width, i/width, monochrome);
         }
         this.setImage(im);
+    }
+    
+    private void colorPixel(WritableImage im, int x, int y, Color c)
+    {
+        for (int i=0; i<pixelMultiplier; i++)
+            for (int j=0; j<pixelMultiplier; j++)
+                im.getPixelWriter().setColor(pixelMultiplier*x+j, pixelMultiplier*y+i, c);
     }
 }
