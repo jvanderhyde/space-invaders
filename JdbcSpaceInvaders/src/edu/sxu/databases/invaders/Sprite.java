@@ -18,6 +18,7 @@ public class Sprite
     private double velocityY;
     private double width;
     private double height;
+    private boolean alive = true;
 
     public void setImage(Image i)
     {
@@ -58,9 +59,12 @@ public class Sprite
 
     public void render(GraphicsContext gc)
     {
-        gc.drawImage( image, positionX, positionY );
-        gc.setStroke(Color.RED);
-        gc.strokeRect(positionX, positionY, width, height);
+        if (this.alive)
+        {
+            gc.drawImage( image, positionX, positionY );
+            gc.setStroke(Color.RED);
+            gc.strokeRect(positionX, positionY, width, height);
+        }
     }
 
     public Rectangle2D getBoundary()
@@ -70,7 +74,20 @@ public class Sprite
 
     public boolean intersects(Sprite s)
     {
-        return s.getBoundary().intersects( this.getBoundary() );
+        if (this.alive && s.alive)
+            return s.getBoundary().intersects( this.getBoundary() );
+        else
+            return false;
+    }
+    
+    public boolean isAlive()
+    {
+        return alive;
+    }
+    
+    public void kill()
+    {
+        alive = false;
     }
     
     @Override

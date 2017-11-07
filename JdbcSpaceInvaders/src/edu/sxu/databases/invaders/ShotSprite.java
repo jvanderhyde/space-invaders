@@ -5,8 +5,6 @@ package edu.sxu.databases.invaders;
 
 public class ShotSprite extends PixelSprite
 {
-    private boolean alive = true;
-    
     public ShotSprite()
     {
         super("oooo", 1);
@@ -20,12 +18,7 @@ public class ShotSprite extends PixelSprite
         
         //kill when it goes off the screen
         if (this.getBoundary().getMaxY()<0)
-            this.alive = false;
-    }
-    
-    public boolean isAlive()
-    {
-        return alive;
+            this.kill();
     }
     
 }

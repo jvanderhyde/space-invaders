@@ -83,10 +83,7 @@ public class InvadersGame extends javafx.application.Application
                     ShotSprite s = it.next();
                     s.update(elapsedTime);
                     if (!s.isAlive())
-                    {
-                        //System.out.println("Shot reached the top");
                         it.remove();
-                    }
                 }
                 
                 //clear canvas
