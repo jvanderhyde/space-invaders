@@ -15,20 +15,18 @@ public class AlienSprite extends PixelSprite
             "o o     o o"+
             "   oo oo   ";
     private static final int imageBitsWidth2 = 11;
-    private static final double speed = 50;
+    private static final double speed = 20;
     
     private double direction = 1;
     private Bomb bomb;
     
-    public AlienSprite(double x, double y, int type)
+    public AlienSprite(int type)
     {
         super(imageBits2,imageBitsWidth2);
         if ((type!=1) && (type!=2) && (type!=3))
             throw new IllegalArgumentException("Type must be 1, 2, or 3. ("+type+")");
         
-        this.setPosition(x, y);
         this.setVelocity(direction*speed, 0);
-        bomb = new Bomb(x, y);
     }
     
     public void moveDown()

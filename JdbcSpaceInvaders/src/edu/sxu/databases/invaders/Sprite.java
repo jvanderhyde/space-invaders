@@ -1,6 +1,6 @@
 //Sprite class
 //Created by James Vanderhyde, 4 November 2017
-//  Copied from https://gamedevelopment.tutsplus.com/tutorials/introduction-to-javafx-for-game-development--cms-23835
+//  Originally copied from https://gamedevelopment.tutsplus.com/tutorials/introduction-to-javafx-for-game-development--cms-23835
 
 package edu.sxu.databases.invaders;
 
