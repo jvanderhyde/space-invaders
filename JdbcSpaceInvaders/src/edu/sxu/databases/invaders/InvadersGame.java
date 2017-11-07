@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import static edu.sxu.databases.invaders.GameConstants.*;
+import java.util.Iterator;
 
 public class InvadersGame extends javafx.application.Application
 {
@@ -76,12 +77,26 @@ public class InvadersGame extends javafx.application.Application
                 
                 alien.update(elapsedTime);
                 
+                Iterator<ShotSprite> it = player.getShots().iterator();
+                while (it.hasNext())
+                {
+                    ShotSprite s = it.next();
+                    s.update(elapsedTime);
+                    if (!s.isAlive())
+                    {
+                        //System.out.println("Shot reached the top");
+                        it.remove();
+                    }
+                }
+                
                 //clear canvas
                 gc.setFill( Color.BLACK );
                 gc.fillRect(0, 0, 1000, 1000);
                 
                 player.render(gc);
                 alien.render(gc);
+                for (ShotSprite s:player.getShots())
+                    s.render(gc);
             }
         }.start();
         
