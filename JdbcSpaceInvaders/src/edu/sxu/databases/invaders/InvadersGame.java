@@ -26,7 +26,7 @@ public class InvadersGame extends javafx.application.Application
     private final Collection<String> input = new HashSet<>();
     private GraphicsContext gc;
     private PlayerSprite player;
-    private AlienSprite alien;
+    private AlienGroup alienMatrix;
  
     @Override
     public void start(Stage stage) 
@@ -63,8 +63,8 @@ public class InvadersGame extends javafx.application.Application
     {
         player = new PlayerSprite();
         player.setPosition(10, 350);
-        alien = new AlienSprite(2);
-        alien.setPosition(10, 100);
+        alienMatrix = new AlienGroup();
+        alienMatrix.setPosition(BORDER_LEFT, 0);
  
         (new GameLoop()).start();
     }
@@ -72,7 +72,7 @@ public class InvadersGame extends javafx.application.Application
     private class GameLoop extends AnimationTimer
     {
         long lastNanoTime = System.nanoTime();
-        int numAliens = 1;
+        int numAliens = AlienGroup.NUM_ALIENS_ACROSS*AlienGroup.NUM_ALIENS_DOWN;
 
         @Override
         public void handle(long currentNanoTime)
@@ -85,7 +85,7 @@ public class InvadersGame extends javafx.application.Application
                     input.contains("UP"),input.contains("DOWN"),
                     input.contains("SPACE"),input.contains("SHIFT"));
 
-            alien.update(elapsedTime);
+            alienMatrix.update(elapsedTime);
 
             Iterator<ShotSprite> it = player.getShots().iterator();
             while (it.hasNext())
@@ -98,14 +98,14 @@ public class InvadersGame extends javafx.application.Application
 
             //Check for alien/shot collisions
             for (ShotSprite s:player.getShots())
-            {
-                if (s.intersects(alien))
-                {
-                    alien.kill();
-                    s.kill();
-                    numAliens--;
-                }
-            }
+                for (AlienSprite a:alienMatrix.getAliens())
+                    if (s.intersects(a))
+                    {
+                        a.kill();
+                        s.kill();
+                        alienMatrix.invalidateBoundary();
+                        numAliens--;
+                    }
             
             //Check for level finished
             if (numAliens==0)
@@ -119,7 +119,7 @@ public class InvadersGame extends javafx.application.Application
             gc.fillRect(0, 0, 1000, 1000);
 
             player.render(gc);
-            alien.render(gc);
+            alienMatrix.render(gc);
             for (ShotSprite s:player.getShots())
                 s.render(gc);
         }

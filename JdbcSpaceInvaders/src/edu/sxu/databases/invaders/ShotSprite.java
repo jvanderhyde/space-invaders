@@ -8,7 +8,7 @@ public class ShotSprite extends PixelSprite
     public ShotSprite()
     {
         super("oooo", 1);
-        this.setVelocity(0, -100);
+        this.setVelocity(0, -300);
     }
     
     @Override
