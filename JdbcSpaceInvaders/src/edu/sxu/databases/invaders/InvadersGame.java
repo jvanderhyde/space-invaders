@@ -27,6 +27,7 @@ public class InvadersGame extends javafx.application.Application
     private GraphicsContext gc;
     private PlayerSprite player;
     private AlienGroup alienMatrix;
+    private PixelSprite ground;
     private int level = 0;
     private int playerScore = 0;
  
@@ -69,6 +70,10 @@ public class InvadersGame extends javafx.application.Application
                            GROUND*PIXEL_SCALE-player.getBoundary().getHeight());
         alienMatrix = new AlienGroup();
         alienMatrix.setPosition(BORDER_LEFT*PIXEL_SCALE, 0);
+        char[] groundGraphic = new char[BOARD_WIDTH+BORDER_RIGHT+BORDER_LEFT];
+        for (int i=0; i<groundGraphic.length; i++) groundGraphic[i]='o';
+        ground = new PixelSprite(new String(groundGraphic),groundGraphic.length);
+        ground.setPosition(0, GROUND*PIXEL_SCALE);
  
         (new GameLoop()).start();
     }
@@ -175,6 +180,7 @@ public class InvadersGame extends javafx.application.Application
                 s.render(gc);
             for (AlienSprite a:alienMatrix.getAliens())
                 a.getBomb().render(gc);
+            ground.render(gc);
         }
     }
 

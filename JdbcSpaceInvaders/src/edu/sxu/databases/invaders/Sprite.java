@@ -65,8 +65,8 @@ public class Sprite
         if (this.alive)
         {
             gc.drawImage( image, positionX, positionY );
-            gc.setStroke(Color.RED);
-            gc.strokeRect(positionX, positionY, width, height);
+            //gc.setStroke(Color.RED);
+            //gc.strokeRect(positionX, positionY, width, height);
         }
     }
 
