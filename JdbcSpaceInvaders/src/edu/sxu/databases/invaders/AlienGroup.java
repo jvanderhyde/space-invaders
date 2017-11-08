@@ -7,23 +7,28 @@ import static edu.sxu.databases.invaders.GameConstants.*;
 import static edu.sxu.databases.invaders.PixelSprite.pixelMultiplier;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 import javafx.geometry.Rectangle2D;
 
 public class AlienGroup extends Sprite
 {
-    public static final int NUM_ALIENS_ACROSS = 11;
-    public static final int NUM_ALIENS_DOWN = 5;
+    public static final int NUM_ALIENS_ACROSS = 11;//11
+    public static final int NUM_ALIENS_DOWN = 5;//5
+    public static final Random rng = new Random();
     
     private final ArrayList<AlienSprite> aliens = new ArrayList<>();
+    private final ArrayList<AlienSprite> aliveAliens = new ArrayList<>();
     private Rectangle2D boundary;
     private double speed = 20;
     private double direction = 1;
+    private double timeToNextBomb = 0;
     
     public AlienGroup()
     {
         int[] alienTypes = {3, 2, 2, 1, 1};
         for (int i=0; i<NUM_ALIENS_DOWN*NUM_ALIENS_ACROSS; i++)
             aliens.add(new AlienSprite(alienTypes[i/NUM_ALIENS_ACROSS]));
+        aliveAliens.addAll(aliens);
         this.updateAlienLocations();
         this.calcBoundary();
         this.setVelocity(direction*speed, 0);
@@ -42,6 +47,11 @@ public class AlienGroup extends Sprite
             }
     }
     
+    public void increaseSpeed()
+    {
+        speed++;
+    }
+    
     @Override
     public void update(double time)
     {
@@ -54,6 +64,7 @@ public class AlienGroup extends Sprite
         super.update(time);
         this.updateAlienLocations();
         this.calcBoundary();
+        this.timeToNextBomb -= time;
     }
     
     private void moveDown()
@@ -67,6 +78,23 @@ public class AlienGroup extends Sprite
         this.setVelocity(direction*speed, 0);
     }
     
+    void checkBombSpawn(int level)
+    {
+        if (this.timeToNextBomb <= 0 && !aliveAliens.isEmpty())
+        {
+            //spawn bombs
+            for (int i=0; i<level; i++)
+            {
+                AlienSprite bomber = aliveAliens.get(rng.nextInt(aliveAliens.size()));
+                if (!bomber.getBomb().isAlive())
+                    bomber.launchBomb();
+            }
+            
+            //reset time
+            this.timeToNextBomb += 0.5+rng.nextDouble();
+        }
+    }
+    
     @Override
     public void render(javafx.scene.canvas.GraphicsContext gc)
     {
@@ -74,8 +102,9 @@ public class AlienGroup extends Sprite
             a.render(gc);
     }
     
-    public void invalidateBoundary()
+    public void invalidateBoundary(AlienSprite killedAlien)
     {
+        aliveAliens.remove(killedAlien);
         this.calcBoundary();
     }
     
@@ -107,5 +136,5 @@ public class AlienGroup extends Sprite
     {
         return aliens;
     }
-    
+
 }

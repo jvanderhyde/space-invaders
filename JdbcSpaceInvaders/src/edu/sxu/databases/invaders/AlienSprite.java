@@ -3,6 +3,8 @@
 
 package edu.sxu.databases.invaders;
 
+import javafx.geometry.Rectangle2D;
+
 public class AlienSprite extends PixelSprite
 {
     private static final String imageBits1 = 
@@ -45,6 +47,13 @@ public class AlienSprite extends PixelSprite
         super(imageBits2,imageBitsWidth2);
         if ((type!=1) && (type!=2) && (type!=3))
             throw new IllegalArgumentException("Type must be 1, 2, or 3. ("+type+")");
+        bomb = new Bomb(); //bomb is never null
+        bomb.kill();
+    }
+    
+    public int points()
+    {
+        return 10;
     }
     
     public Bomb getBomb()
@@ -52,25 +61,33 @@ public class AlienSprite extends PixelSprite
         return bomb;
     }
     
+    public void launchBomb()
+    {
+        bomb = new Bomb();
+        Rectangle2D bd = AlienSprite.this.getBoundary();
+        double x = (bd.getMinX()+bd.getMaxX())/2;
+        double y = bd.getMaxY();
+        bomb.setPosition(x, y);
+    }
+    
     public class Bomb extends PixelSprite
     {
-        private boolean destroyed = true; 
-        
-        public Bomb(double x, double y)
+        public Bomb()
         {
             super(" oo  oo  oo  oo ",2);
-            this.setPosition(x, y);
+            this.setVelocity(0, 150);
         }
         
-        public boolean isDestroyed()
+        @Override
+        public void update(double time)
         {
-            return destroyed;
+            super.update(time);
+
+            //kill when it goes off the screen
+            if (this.getBoundary().getMaxY()>GameConstants.GROUND*GameConstants.PIXEL_SCALE)
+                this.kill();
         }
-        
-        public void setDestroyed(boolean destroyed)
-        {
-            this.destroyed = destroyed;
-        }
+
     }
     
 }

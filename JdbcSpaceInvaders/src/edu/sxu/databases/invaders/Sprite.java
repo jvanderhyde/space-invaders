@@ -53,8 +53,11 @@ public class Sprite
 
     public void update(double time)
     {
-        positionX += velocityX * time;
-        positionY += velocityY * time;
+        if (this.alive)
+        {
+            positionX += velocityX * time;
+            positionY += velocityY * time;
+        }
     }
 
     public void render(GraphicsContext gc)
