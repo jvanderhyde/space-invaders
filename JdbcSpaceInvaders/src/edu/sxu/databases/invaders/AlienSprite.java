@@ -8,15 +8,15 @@ import javafx.geometry.Rectangle2D;
 public class AlienSprite extends PixelSprite
 {
     private static final String imageBits1 = 
-            "  o     o  "+
-            "   o   o   "+
-            "  ooooooo  "+
-            " oo ooo oo "+
-            "ooooooooooo"+
-            "o ooooooo o"+
-            "o o     o o"+
-            "   oo oo   ";
-    private static final int imageBitsWidth1 = 11;
+            "    oooo    "+
+            " oooooooooo "+
+            "oooooooooooo"+
+            "ooo  oo  ooo"+
+            "oooooooooooo"+
+            "  ooo  ooo  "+
+            " oo  oo  oo "+
+            "  oo    oo  ";
+    private static final int imageBitsWidth1 = 12;
     
     private static final String imageBits2 = 
             "  o     o  "+
@@ -30,30 +30,42 @@ public class AlienSprite extends PixelSprite
     private static final int imageBitsWidth2 = 11;
     
     private static final String imageBits3 = 
-            "  o     o  "+
-            "   o   o   "+
-            "  ooooooo  "+
-            " oo ooo oo "+
-            "ooooooooooo"+
-            "o ooooooo o"+
-            "o o     o o"+
-            "   oo oo   ";
-    private static final int imageBitsWidth3 = 11;
+            "   oo   "+
+            "  oooo  "+
+            " oooooo "+
+            "oo oo oo"+
+            "oooooooo"+
+            "  o  o  "+
+            " o oo o "+
+            "o o  o o";
+    private static final int imageBitsWidth3 = 8;
     
     private Bomb bomb;
+    private final int points;
     
-    public AlienSprite(int type)
+    private AlienSprite(String pixels, int width, int points)
     {
-        super(imageBits2,imageBitsWidth2);
-        if ((type!=1) && (type!=2) && (type!=3))
-            throw new IllegalArgumentException("Type must be 1, 2, or 3. ("+type+")");
+        super(pixels,width);
         bomb = new Bomb(); //bomb is never null
         bomb.kill();
+        this.points = points;
+    }
+    
+    public static AlienSprite createAlien(int type)
+    {
+        if ((type!=1) && (type!=2) && (type!=3))
+            throw new IllegalArgumentException("Type must be 1, 2, or 3. ("+type+")");
+        if (type==1)
+            return new AlienSprite(imageBits1, imageBitsWidth1, 10);
+        else if (type==2)
+            return new AlienSprite(imageBits2, imageBitsWidth2, 20);
+        else
+            return new AlienSprite(imageBits3, imageBitsWidth3, 30);
     }
     
     public int points()
     {
-        return 10;
+        return points;
     }
     
     public Bomb getBomb()

@@ -19,7 +19,7 @@ public class AlienGroup extends Sprite
     private final ArrayList<AlienSprite> aliens = new ArrayList<>();
     private final ArrayList<AlienSprite> aliveAliens = new ArrayList<>();
     private Rectangle2D boundary;
-    private double speed = 20;
+    private double speed = 10;
     private double direction = 1;
     private double timeToNextBomb = 0;
     
@@ -27,7 +27,7 @@ public class AlienGroup extends Sprite
     {
         int[] alienTypes = {3, 2, 2, 1, 1};
         for (int i=0; i<NUM_ALIENS_DOWN*NUM_ALIENS_ACROSS; i++)
-            aliens.add(new AlienSprite(alienTypes[i/NUM_ALIENS_ACROSS]));
+            aliens.add(AlienSprite.createAlien(alienTypes[i/NUM_ALIENS_ACROSS]));
         aliveAliens.addAll(aliens);
         this.updateAlienLocations();
         this.calcBoundary();
@@ -50,6 +50,7 @@ public class AlienGroup extends Sprite
     public void increaseSpeed()
     {
         speed++;
+        this.setVelocity(direction*speed, 0);
     }
     
     @Override
