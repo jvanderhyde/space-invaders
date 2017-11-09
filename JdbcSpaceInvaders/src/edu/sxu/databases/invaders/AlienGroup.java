@@ -50,7 +50,7 @@ public class AlienGroup extends Sprite
             }
     }
     
-    public void increaseSpeed()
+    private void increaseSpeed()
     {
         tickPeriod--;
         this.setVelocity(direction*MOVEMENT_PER_TICK/tickPeriod, 0);
@@ -106,11 +106,11 @@ public class AlienGroup extends Sprite
             a.render(gc);
     }
     
-    public void invalidateBoundary(AlienSprite killedAlien)
+    public void killAlien(AlienSprite killedAlien)
     {
         aliveAliens.remove(killedAlien);
         this.calcBoundary();
-        this.setVelocity(direction*MOVEMENT_PER_TICK/tickPeriod, 0);
+        this.increaseSpeed();
     }
     
     private void calcBoundary()

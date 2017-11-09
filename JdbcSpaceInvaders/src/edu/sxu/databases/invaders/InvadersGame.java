@@ -125,10 +125,9 @@ public class InvadersGame extends javafx.application.Application
                     {
                         a.kill();
                         s.kill();
-                        alienMatrix.invalidateBoundary(a);
+                        alienMatrix.killAlien(a);
                         numAliens--;
                         playerScore += a.points();
-                        alienMatrix.increaseSpeed();
                     }
             
             //Check for bomb/shot collisions
