@@ -3,12 +3,11 @@
 
 package edu.sxu.databases.invaders;
 
-public class ShotSprite extends PixelSprite
+public abstract class ShotSprite extends PixelSprite
 {
-    public ShotSprite()
+    public ShotSprite(String pixels, int width)
     {
-        super("oooo", 1);
-        this.setVelocity(0, -300);
+        super(pixels,width);
     }
     
     @Override

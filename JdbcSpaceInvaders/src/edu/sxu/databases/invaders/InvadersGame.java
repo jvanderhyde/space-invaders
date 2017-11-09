@@ -30,6 +30,7 @@ public class InvadersGame extends javafx.application.Application
     private PixelSprite ground;
     private int level = 0;
     private int playerScore = 0;
+    private int playerType = 3;
  
     @Override
     public void start(Stage stage) 
@@ -65,7 +66,7 @@ public class InvadersGame extends javafx.application.Application
     private void startLevel()
     {
         level++;
-        player = new PlayerSprite();
+        player = PlayerSprite.createPlayer(playerType);
         player.setPosition((BOARD_WIDTH/2+BORDER_LEFT)*PIXEL_SCALE, 
                            GROUND*PIXEL_SCALE-player.getBoundary().getHeight());
         alienMatrix = new AlienGroup();
@@ -109,13 +110,11 @@ public class InvadersGame extends javafx.application.Application
             alienMatrix.update(elapsedTime);
 
             //Update player shots
-            Iterator<ShotSprite> it = player.getShots().iterator();
-            while (it.hasNext())
+            for (ShotSprite s:player.getShots())
             {
-                ShotSprite s = it.next();
                 s.update(elapsedTime);
-                if (!s.isAlive())
-                    it.remove();
+                if (s.isAlive() && (s.getBoundary().getMaxY() < 0))
+                    s.kill();
             }
             
             //Update alien bombs
@@ -144,6 +143,15 @@ public class InvadersGame extends javafx.application.Application
                         a.getBomb().kill();
                         s.kill();
                     }
+            
+            //Clean up dead player shots
+            Iterator<ShotSprite> it = player.getShots().iterator();
+            while (it.hasNext())
+            {
+                ShotSprite s = it.next();
+                if (!s.isAlive())
+                    it.remove();
+            }            
             
             //Check for bomb/player collision
             for (AlienSprite a:alienMatrix.getAliens())

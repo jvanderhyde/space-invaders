@@ -82,7 +82,7 @@ public class AlienSprite extends PixelSprite
         bomb.setPosition(x, y);
     }
     
-    public class Bomb extends PixelSprite
+    public static class Bomb extends PixelSprite
     {
         public Bomb()
         {

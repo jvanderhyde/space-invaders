@@ -6,37 +6,38 @@ package edu.sxu.databases.invaders;
 import java.util.Collection;
 import java.util.HashSet;
 import javafx.geometry.Rectangle2D;
+import edu.sxu.databases.invaders.heroes.*;
 
-public class PlayerSprite extends PixelSprite
+public abstract class PlayerSprite extends PixelSprite
 {
-    private static final String imageBits = 
-            "      o      "+
-            "     ooo     "+
-            "     ooo     "+
-            " ooooooooooo "+
-            "ooooooooooooo"+
-            "ooooooooooooo"+
-            "ooooooooooooo";
-    private static final int imageBitsWidth = 13;
-    
     private boolean readyToFire = true;
-    private final double minTimeBetweenShots = 0.5;
+    private final double minTimeBetweenShots;
     private double timeUntilNextShot = 0;
     
-    private HashSet<ShotSprite> shots = new HashSet<>();
+    private final HashSet<ShotSprite> shots = new HashSet<>();
     
-    public PlayerSprite()
+    public static PlayerSprite createPlayer(int type)
     {
-        super(imageBits,imageBitsWidth);
+        if ((type!=1) && (type!=2) && (type!=3))
+            throw new IllegalArgumentException("Type must be 1, 2, or 3. ("+type+")");
+        if (type==1)
+            return new Fighter();
+        else if (type==2)
+            return new Rogue();
+        else
+            return new Wizard();
+    }
+    
+    protected PlayerSprite(String pixels, int width, double minTimeBetweenShots)
+    {
+        super(pixels,width);
+        this.minTimeBetweenShots = minTimeBetweenShots;
     }
     
     public void update(double time, boolean left, boolean right, boolean up, boolean down, boolean fire1, boolean fire2)
     {
         this.setVelocity(0,0);
-        if (left)
-            this.addVelocity(-50,0);
-        if (right)
-            this.addVelocity(50,0);
+        this.motion(left,right,up,down);
         
         if (timeUntilNextShot > 0)
         {
@@ -53,19 +54,39 @@ public class PlayerSprite extends PixelSprite
         
         this.update(time);
     }
+    
+    protected void motion(boolean left, boolean right, boolean up, boolean down)
+    {
+        if (left)
+            this.addVelocity(-50,0);
+        if (right)
+            this.addVelocity(50,0);
+    }
 
     private void fireShot()
     {
         timeUntilNextShot = minTimeBetweenShots;
         readyToFire = false;
         
-        ShotSprite shot = new ShotSprite();
+        ShotSprite shot = this.createShot();
         Rectangle2D bd = this.getBoundary();
         double x = (bd.getMinX()+bd.getMaxX())/2;
         double y = bd.getMinY();
         //System.out.println("Fire! ("+x+","+y+")");
-        shot.setPosition(x, y);
+        this.positionShot(shot,x,y);
+        addShot(shot);
+    }
+
+    protected void addShot(ShotSprite shot)
+    {
         shots.add(shot);
+    }
+    
+    protected abstract ShotSprite createShot();
+    
+    protected void positionShot(ShotSprite shot, double x, double y)
+    {
+        shot.setPosition(x, y);
     }
     
     public Collection<ShotSprite> getShots()
