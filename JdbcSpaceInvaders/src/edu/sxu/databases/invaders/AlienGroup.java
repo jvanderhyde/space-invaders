@@ -14,12 +14,15 @@ public class AlienGroup extends Sprite
 {
     public static final int NUM_ALIENS_ACROSS = 11;//11
     public static final int NUM_ALIENS_DOWN = 5;//5
+    public static final double MIN_TICK = 2;
+    public static final double START_TICK = NUM_ALIENS_ACROSS*NUM_ALIENS_DOWN+MIN_TICK;
+    public static final double MOVEMENT_PER_TICK = 650;
     public static final Random rng = new Random();
     
     private final ArrayList<AlienSprite> aliens = new ArrayList<>();
     private final ArrayList<AlienSprite> aliveAliens = new ArrayList<>();
     private Rectangle2D boundary;
-    private double speed = 10;
+    private double tickPeriod = START_TICK;
     private double direction = 1;
     private double timeToNextBomb = 0;
     
@@ -31,7 +34,7 @@ public class AlienGroup extends Sprite
         aliveAliens.addAll(aliens);
         this.updateAlienLocations();
         this.calcBoundary();
-        this.setVelocity(direction*speed, 0);
+        this.setVelocity(direction*MOVEMENT_PER_TICK/tickPeriod, 0);
     }
     
     private void updateAlienLocations()
@@ -49,8 +52,8 @@ public class AlienGroup extends Sprite
     
     public void increaseSpeed()
     {
-        speed++;
-        this.setVelocity(direction*speed, 0);
+        tickPeriod--;
+        this.setVelocity(direction*MOVEMENT_PER_TICK/tickPeriod, 0);
     }
     
     @Override
@@ -76,7 +79,7 @@ public class AlienGroup extends Sprite
     private void reverseDirection()
     {
         this.direction = -1*this.direction;
-        this.setVelocity(direction*speed, 0);
+        this.setVelocity(direction*MOVEMENT_PER_TICK/tickPeriod, 0);
     }
     
     void checkBombSpawn(int level)
