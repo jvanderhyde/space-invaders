@@ -53,13 +53,13 @@ public class Wizard extends PlayerSprite
             //Blow up the shot
             ShotSprite up, left, right;
             up = new ShotSprite("ooo",1,lifeSpan);
-            up.setPosition(s.getBoundary().getMinX(), s.getBoundary().getMinY());
+            up.setPosition(s.getBoundary().getMinX()+2*GameConstants.PIXEL_SCALE, s.getBoundary().getMinY()-1*GameConstants.PIXEL_SCALE);
             up.setVelocity(0, -400);
             left = new ShotSprite("ooo",3,lifeSpan);
             left.setPosition(s.getBoundary().getMinX(), s.getBoundary().getMinY());
             left.setVelocity(-400, 0);
             right = new ShotSprite("ooo",3,lifeSpan);
-            right.setPosition(s.getBoundary().getMinX(), s.getBoundary().getMinY());
+            right.setPosition(s.getBoundary().getMinX()+2*GameConstants.PIXEL_SCALE, s.getBoundary().getMinY());
             right.setVelocity(400, 0);
             this.addShot(up);
             this.addShot(left);
