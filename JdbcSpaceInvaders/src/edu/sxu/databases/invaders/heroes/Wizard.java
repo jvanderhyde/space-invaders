@@ -1,4 +1,4 @@
-//Wizard (intelligent) class
+//Wizard (intelligent) class (Currer)
 //Created by James Vanderhyde, 9 November 2017
 
 package edu.sxu.databases.invaders.heroes;

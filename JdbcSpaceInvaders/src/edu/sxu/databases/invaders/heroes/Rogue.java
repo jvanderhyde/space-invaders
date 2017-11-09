@@ -1,4 +1,4 @@
-//Rogue (charming joker) class
+//Rogue (charming joker) class (Ellis)
 //Created by James Vanderhyde, 9 November 2017
 
 package edu.sxu.databases.invaders.heroes;

@@ -1,4 +1,4 @@
-//Fighter (strong) class
+//Fighter (strong) class (Acton)
 //Created by James Vanderhyde, 9 November 2017
 
 package edu.sxu.databases.invaders.heroes;
