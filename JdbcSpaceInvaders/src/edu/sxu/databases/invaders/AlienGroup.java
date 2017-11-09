@@ -110,6 +110,7 @@ public class AlienGroup extends Sprite
     {
         aliveAliens.remove(killedAlien);
         this.calcBoundary();
+        this.setVelocity(direction*MOVEMENT_PER_TICK/tickPeriod, 0);
     }
     
     private void calcBoundary()

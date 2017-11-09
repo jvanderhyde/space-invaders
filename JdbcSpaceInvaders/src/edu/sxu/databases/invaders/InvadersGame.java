@@ -30,7 +30,7 @@ public class InvadersGame extends javafx.application.Application
     private PixelSprite ground;
     private int level = 0;
     private int playerScore = 0;
-    private int playerType = 3;
+    private int playerType = 2;
  
     @Override
     public void start(Stage stage) 
@@ -111,11 +111,7 @@ public class InvadersGame extends javafx.application.Application
 
             //Update player shots
             for (ShotSprite s:player.getShots())
-            {
                 s.update(elapsedTime);
-                if (s.isAlive() && (s.getBoundary().getMaxY() < 0))
-                    s.kill();
-            }
             
             //Update alien bombs
             alienMatrix.checkBombSpawn(level);

@@ -33,7 +33,7 @@ public class Rogue extends PlayerSprite
     {
         public Arrow()
         {
-            super("oooo", 1);
+            super("oooo", 1, 5);
             this.setVelocity(0, -300);
         }
     }

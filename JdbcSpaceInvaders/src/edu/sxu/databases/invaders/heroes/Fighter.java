@@ -59,25 +59,12 @@ public class Fighter extends PlayerSprite
     
     private static class Sword extends ShotSprite
     {
-        double lifeSpan = 0.2;
-        
         public Sword()
         {
-            super(" o  o  o ooo o ", 3);
+            super(" o  o  o ooo o ", 3, 0.2);
             this.setVelocity(0, 0);
         }
         
-        @Override
-        public void update(double time)
-        {
-            super.update(time);
-            
-            //Kill (sheath) after a short time
-            lifeSpan -= time;
-            if (lifeSpan <= 0)
-                this.kill();
-        }
-
     }
     
 }

@@ -3,11 +3,14 @@
 
 package edu.sxu.databases.invaders;
 
-public abstract class ShotSprite extends PixelSprite
+public class ShotSprite extends PixelSprite
 {
-    public ShotSprite(String pixels, int width)
+    double lifeSpan;
+
+    public ShotSprite(String pixels, int width, double lifeSpan)
     {
         super(pixels,width);
+        this.lifeSpan = lifeSpan;
     }
     
     @Override
@@ -15,8 +18,13 @@ public abstract class ShotSprite extends PixelSprite
     {
         super.update(time);
         
-        //kill when it goes off the screen
+        //Kill when it goes off the screen
         if (this.getBoundary().getMaxY()<0)
+            this.kill();
+        
+        //Kill after a specific time
+        lifeSpan -= time;
+        if (lifeSpan <= 0)
             this.kill();
     }
     

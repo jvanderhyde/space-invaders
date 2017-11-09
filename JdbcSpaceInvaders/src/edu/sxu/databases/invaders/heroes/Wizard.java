@@ -47,12 +47,23 @@ public class Wizard extends PlayerSprite
     public void update(double time)
     {
         super.update(time);
+        double lifeSpan = 0.2;
         for (ShotSprite s:this.shotsToBlowUp)
         {
             //Blow up the shot
-            Fireball extension = new Fireball();
-            extension.setPosition(s.getBoundary().getMinX(), s.getBoundary().getMinY());
-            this.addShot(extension);
+            ShotSprite up, left, right;
+            up = new ShotSprite("ooo",1,lifeSpan);
+            up.setPosition(s.getBoundary().getMinX(), s.getBoundary().getMinY());
+            up.setVelocity(0, -400);
+            left = new ShotSprite("ooo",3,lifeSpan);
+            left.setPosition(s.getBoundary().getMinX(), s.getBoundary().getMinY());
+            left.setVelocity(-400, 0);
+            right = new ShotSprite("ooo",3,lifeSpan);
+            right.setPosition(s.getBoundary().getMinX(), s.getBoundary().getMinY());
+            right.setVelocity(400, 0);
+            this.addShot(up);
+            this.addShot(left);
+            this.addShot(right);
         }
         this.shotsToBlowUp.clear();
     }
@@ -68,7 +79,7 @@ public class Wizard extends PlayerSprite
         
         public Fireball()
         {
-            super(imageBits, 5);
+            super(imageBits, 5, 5);
             this.setVelocity(0, -300);
         }
         
