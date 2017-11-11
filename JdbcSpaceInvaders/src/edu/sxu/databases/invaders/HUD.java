@@ -20,6 +20,7 @@ public class HUD extends HBox
     private final TextField screennameText = new TextField();
     private final Label scoreLabel = new Label("Score");
     private final Label scoreDisplay = new Label("0");
+    private final Label heroLabel = new Label("    Hero");
     private Button hero1, hero2, hero3;
     private final String style = "-fx-background-color: #000000; -fx-text-fill: #ffffff;";
     private StartGameCallback startGameCallback;
@@ -33,6 +34,7 @@ public class HUD extends HBox
         screennameLabel.setAlignment(Pos.BOTTOM_LEFT);
         scoreLabel.setStyle(style);
         scoreDisplay.setStyle(style);
+        heroLabel.setStyle(style);
         
         screennameText.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) ->
         {
@@ -45,7 +47,7 @@ public class HUD extends HBox
         initButtons(); 
         
         this.getChildren().addAll(screennameLabel, screennameText, scoreLabel, scoreDisplay,
-                hero1, hero2, hero3);
+                heroLabel, hero1, hero2, hero3);
         this.setStyle(style);
     }
 
@@ -126,6 +128,11 @@ public class HUD extends HBox
     public void disableScore()
     {
         scoreDisplay.setDisable(true);
+    }
+    
+    public String getScreenname()
+    {
+        return this.screennameText.getText();
     }
     
     public void setStartGameCallback(StartGameCallback c)

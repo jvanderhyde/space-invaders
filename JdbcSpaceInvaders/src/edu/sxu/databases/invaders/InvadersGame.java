@@ -4,6 +4,7 @@
 package edu.sxu.databases.invaders;
 
 import static edu.sxu.databases.invaders.GameConstants.*;
+import edu.sxu.databases.invaders.backend.ScoreUpdater;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -26,6 +27,7 @@ public class InvadersGame extends javafx.application.Application
     private final Collection<String> input = new HashSet<>();
     private GraphicsContext gc;
     private HUD hud;
+    private ScoreUpdater database;
     private PlayerSprite player;
     private AlienGroup alienMatrix;
     private PixelSprite ground;
@@ -68,6 +70,8 @@ public class InvadersGame extends javafx.application.Application
             InvadersGame.this.startLevel();
             canvas.requestFocus();
         });
+        
+        database = new ScoreUpdater();
 
         stage.show();
     }    
@@ -96,7 +100,7 @@ public class InvadersGame extends javafx.application.Application
         System.out.println("Score: "+playerScore);
         
         //Update database
-        
+        database.updateDatabase(hud.getScreenname(),playerScore,playerType);
     }
 
     private class GameLoop extends AnimationTimer

@@ -1,7 +1,7 @@
 //Test the connection to the database
 //Created by James Vanderhyde, 11 November 2015
 
-package jdbctest;
+package edu.sxu.databases.invaders.backend;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,7 +21,7 @@ public class JdbcTest
         {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
         }
-        catch (Exception e)
+        catch (ClassNotFoundException | InstantiationException | IllegalAccessException e)
         {
             System.err.println("Error when loading DB driver:");
             System.err.println(e);
