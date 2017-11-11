@@ -8,11 +8,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import javafx.animation.AnimationTimer;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -30,13 +30,13 @@ public class InvadersGame extends javafx.application.Application
     private PixelSprite ground;
     private int level = 0;
     private int playerScore = 0;
-    private int playerType = 2;
+    private int playerType = 0;
  
     @Override
     public void start(Stage stage) 
     {
         stage.setTitle("Invaders");
-        Group root = new Group();
+        BorderPane root = new BorderPane();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         
@@ -54,12 +54,21 @@ public class InvadersGame extends javafx.application.Application
         });
 
         Canvas canvas = new Canvas((BOARD_WIDTH+BORDER_RIGHT+BORDER_LEFT)*PIXEL_SCALE, BOARD_HEIGHT*PIXEL_SCALE);
-        root.getChildren().add(canvas);
-
+        root.setCenter(canvas);
         gc = canvas.getGraphicsContext2D();
-
-        this.startLevel();
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0, 0, 1000, 1000);
         
+        HUD hud = new HUD();
+        root.setBottom(hud);
+        hud.addCallback((Object... data) -> 
+        {
+            playerType = (Integer)data[0];
+            InvadersGame.this.startLevel();
+            canvas.requestFocus();
+            return null;
+        });
+
         stage.show();
     }    
     

@@ -7,7 +7,7 @@ public class GameConstants
 {
     public static final int PIXEL_SCALE = 3;
     public static final int BOARD_WIDTH = 217;
-    public static final int BOARD_HEIGHT = 200;
+    public static final int BOARD_HEIGHT = 170;
     public static final int GROUND = 167;
     public static final int BOMB_HEIGHT = 5;
     public static final int ALIEN_HEIGHT = 16;

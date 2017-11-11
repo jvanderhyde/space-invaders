@@ -12,6 +12,11 @@ public class PixelSprite extends Sprite
     
     public PixelSprite(String pixels, int width)
     {
+        this.setImage(createPixelImage(pixels, width));
+    }
+
+    public static final WritableImage createPixelImage(String pixels, int width)
+    {
         Color monochrome = Color.WHITE;
         WritableImage im = new WritableImage(pixelMultiplier*width,pixelMultiplier*pixels.length()/width);
         for (int i=0; i<pixels.length(); i++)
@@ -21,10 +26,10 @@ public class PixelSprite extends Sprite
             else
                 colorPixel(im, i%width, i/width, monochrome);
         }
-        this.setImage(im);
+        return im;
     }
     
-    private void colorPixel(WritableImage im, int x, int y, Color c)
+    private static void colorPixel(WritableImage im, int x, int y, Color c)
     {
         for (int i=0; i<pixelMultiplier; i++)
             for (int j=0; j<pixelMultiplier; j++)
