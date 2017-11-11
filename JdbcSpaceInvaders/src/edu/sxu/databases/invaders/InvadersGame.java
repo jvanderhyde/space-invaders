@@ -91,6 +91,7 @@ public class InvadersGame extends javafx.application.Application
     private void gameOver()
     {
         //Display score
+        hud.disableScore();
         System.out.println("Game over!");
         System.out.println("Score: "+playerScore);
         
