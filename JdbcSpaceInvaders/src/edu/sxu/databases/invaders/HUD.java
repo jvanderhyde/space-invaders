@@ -20,7 +20,7 @@ public class HUD extends HBox
     private final Label scoreLabel = new Label("0");
     private Button hero1, hero2, hero3;
     private final String style = "-fx-background-color: #000000; -fx-text-fill: #ffffff";
-    private final ArrayList<Callback> callbacks = new ArrayList<>();
+    private StartGameCallback startGameCallback;
     
     public HUD()
     {
@@ -86,7 +86,7 @@ public class HUD extends HBox
                 toHide.remove(hero-1);
                 for (Button b:toHide) b.setVisible(false);
                 
-                for (Callback c:callbacks) c.call(hero);
+                startGameCallback.call(hero);
             }
         };
         hero1.setOnAction(new StartGameHandler(1));
@@ -99,13 +99,13 @@ public class HUD extends HBox
         scoreLabel.setText(String.valueOf(score));
     }
     
-    public void addCallback(Callback c)
+    public void setStartGameCallback(StartGameCallback c)
     {
-        callbacks.add(c);
+        startGameCallback = c;
     }
     
-    public static interface Callback
+    public static interface StartGameCallback
     {
-        public Object call(Object... data);
+        public void call(int hero);
     }
 }

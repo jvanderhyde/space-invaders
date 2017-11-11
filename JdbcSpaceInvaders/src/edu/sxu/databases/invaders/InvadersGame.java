@@ -62,12 +62,11 @@ public class InvadersGame extends javafx.application.Application
         
         hud = new HUD();
         root.setBottom(hud);
-        hud.addCallback((Object... data) -> 
+        hud.setStartGameCallback((int hero) -> 
         {
-            playerType = (Integer)data[0];
+            playerType = hero;
             InvadersGame.this.startLevel();
             canvas.requestFocus();
-            return null;
         });
 
         stage.show();
