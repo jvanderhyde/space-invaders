@@ -94,6 +94,11 @@ public class HUD extends HBox
         hero3.setOnAction(new StartGameHandler(3));
     }
     
+    public void updateScore(int score)
+    {
+        scoreLabel.setText(String.valueOf(score));
+    }
+    
     public void addCallback(Callback c)
     {
         callbacks.add(c);

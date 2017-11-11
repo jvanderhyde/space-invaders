@@ -25,6 +25,7 @@ public class InvadersGame extends javafx.application.Application
     
     private final Collection<String> input = new HashSet<>();
     private GraphicsContext gc;
+    private HUD hud;
     private PlayerSprite player;
     private AlienGroup alienMatrix;
     private PixelSprite ground;
@@ -59,7 +60,7 @@ public class InvadersGame extends javafx.application.Application
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, 1000, 1000);
         
-        HUD hud = new HUD();
+        hud = new HUD();
         root.setBottom(hud);
         hud.addCallback((Object... data) -> 
         {
@@ -137,6 +138,7 @@ public class InvadersGame extends javafx.application.Application
                         alienMatrix.killAlien(a);
                         numAliens--;
                         playerScore += a.points();
+                        hud.updateScore(playerScore);
                     }
             
             //Check for bomb/shot collisions
