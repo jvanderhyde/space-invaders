@@ -5,4 +5,4 @@ This project is based on a simple Space Invaders clone, with the addition of mul
 
 High scores are stored in a database. Updating and accessing the high score data are an in-class assignment.
 
-![Screenshot](Screen Shot 2018-07-11 at 3.12.34 PM.png)
+![Screenshot](Screen%20Shot%202018-07-11%20at%203.12.34%20PM.png)
