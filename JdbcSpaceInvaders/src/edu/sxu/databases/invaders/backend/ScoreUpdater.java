@@ -7,7 +7,7 @@ public class ScoreUpdater
 {
     public void updateDatabase(String screenname, int score, int hero)
     {
-        //Print message to console (you can remove this)
+        //Print message to console
         String[] heroNames = {"Acton", "Ellis", "Currer"};
         System.out.print(screenname+" achieved a score of "+score+ " while playing ");
         System.out.println(heroNames[hero-1]);
@@ -16,7 +16,7 @@ public class ScoreUpdater
         
         //Record new score in database
         
-        //Display leaderboards
+        //Display high scores and leaderboards
         
     }
 }

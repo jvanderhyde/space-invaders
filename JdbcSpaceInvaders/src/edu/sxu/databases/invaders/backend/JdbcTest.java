@@ -105,7 +105,7 @@ public class JdbcTest
         else
         {
             //Fall back to a non-hidden prompt
-            return prompt(message);
+            return prompt(message+" WARNING: password will be visible:");
         }
     }
 }
