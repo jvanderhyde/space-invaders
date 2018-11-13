@@ -22,6 +22,7 @@ import java.util.Scanner;
  * 
  * Variable player powers (special moves):
  *   Fighter: Bomb deflect. For any 1 rolled, re-roll the die (unless it was all three).
+ *            Keep re-rolling until it's not a 1.
  *   Rogue:   Rapid fire. For any 2 or 3 rolled, duplicate the die.
  *   Wizard:  Exploding shots. For any 6 rolled, count the 6 and re-roll. Continue as 
  *            long as 6s are rolled.
@@ -123,9 +124,13 @@ public class DiceGame
                 if (playerType==1 && r==1)
                 {
                     sum-=r;
-                    System.out.print("†");
-                    int newRoll = rollDie(0);
-                    printDie(newRoll);
+                    int newRoll = r;
+                    while (newRoll==1)
+                    {
+                        System.out.print("†");
+                        newRoll = rollDie(playerScore);
+                        printDie(newRoll);
+                    }
                     bonusRoll.add(newRoll);
                 }
                 if (playerType==2 && (r==2 || r==3))
