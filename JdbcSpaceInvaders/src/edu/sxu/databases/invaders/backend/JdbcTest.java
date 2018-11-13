@@ -1,5 +1,8 @@
 //Test the connection to the database
 //Created by James Vanderhyde, 11 November 2015
+//Modified by James Vanderhyde, 12 November 2018
+//  Removed explicit call to load JDBC driver
+//  Used try-with-resources
 
 package edu.sxu.databases.invaders.backend;
 
@@ -16,44 +19,18 @@ public class JdbcTest
 
     public static void main(String[] args)
     {
-        //Load database driver
-        try
-        {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        }
-        catch (ClassNotFoundException | InstantiationException | IllegalAccessException e)
-        {
-            System.err.println("Error when loading DB driver:");
-            System.err.println(e);
-        }
-        
         //Establish database connection
-        Connection conn = null;
-        try
+        final String url = "jdbc:mysql://csmaster.sxu.edu/hafh";
+        final String username = prompt("Username: ");
+        final String password = promptHidden("Password: ");
+        try (Connection conn = DriverManager.getConnection(url, username, password))
         {
-            final String url = "jdbc:mysql://csmaster.sxu.edu/hafh";
-            final String username = prompt("Username: ");
-            final String password = promptHidden("Password: ");
-            conn = DriverManager.getConnection(url, username, password);
             System.out.println("Connection to database established.");
-        }
-        catch (SQLException e)
-        {
-            System.err.println("SQL exception: " + e.getMessage());
-            System.err.println("SQL state: " + e.getSQLState());
-            System.err.println("Error code: " + e.getErrorCode());
-        }
-
-        if (conn != null)
-        {
-            try
+            
+            //Set up the SQL statement (with a parameter)
+            try (PreparedStatement p = conn.prepareStatement(
+                      "SELECT mfname, mlname FROM manager WHERE managerid = ?"))
             {
-                //Set up the SQL statement (with a parameter)
-                PreparedStatement p = conn.prepareStatement(
-                      "SELECT mfname, mlname "
-                    + "FROM manager "
-                    + "WHERE managerid = ?");
-
                 //Declare variables for data from the record
                 ResultSet r;
                 String firstName, lastName;
@@ -64,8 +41,8 @@ public class JdbcTest
                 //Execute the query
                 r = p.executeQuery();
                 
-                //Loop over the result set
-                while (r.next())
+                //If the result set has something in it, print.
+                if (r.next())
                 {
                     //Get values from the current row
                     firstName = r.getString("mfname");
@@ -74,18 +51,15 @@ public class JdbcTest
                     //Display the result
                     System.out.println("Manager: "+firstName+" "+lastName);
                 }
-            
-                //Close database connection
-                conn.close();
-                System.out.println("Database connection closed.");
-            }
-            catch (SQLException e)
-            {
-                System.err.println("SQL exception: " + e.getMessage());
-                System.err.println("SQL state: " + e.getSQLState());
-                System.err.println("Error code: " + e.getErrorCode());
             }
         }
+        catch (SQLException e)
+        {
+            System.err.println("SQL exception: " + e.getMessage());
+            System.err.println("SQL state: " + e.getSQLState());
+            System.err.println("Error code: " + e.getErrorCode());
+        }
+        System.out.println("Database connection closed.");
     }
 
     private static String prompt(String message)
