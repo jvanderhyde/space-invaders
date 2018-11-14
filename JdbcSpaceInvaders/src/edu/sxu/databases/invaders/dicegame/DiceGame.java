@@ -12,20 +12,29 @@ import java.util.Scanner;
 /**
  * Space Invaders, the Dice Game.
  * 
+ * Invaders are coming from space! One hero stands between Earth and destruction.
+ * You are that hero! You play as one of the classic video game archetypes:
+ * strong fighter, rogue archer, or intelligent wizard.
+ * 
  * Roll three 6-sided dice. The number of pips is the number of invaders you manage
- * to shoot this turn. If a 1 shows up on any dice, that shows the invaders bombing
+ * to repel this turn. If a 1 shows up on any dice, that shows the invaders bombing
  * you. If three dice show a 1, you are surrounded by bombs and the game is over.
  * The game gets harder as you go, because the invaders are moving faster.
  * 
  * At any point in the game, you can stop and "bank" your score. Your score is
  * doubled, but the game is over.
  * 
- * Variable player powers (special moves):
+ * Hero special abilities:
  *   Fighter: Bomb deflect. For any 1 rolled, re-roll the die (unless it was all three).
  *            Keep re-rolling until it's not a 1.
  *   Rogue:   Rapid fire. For any 2 or 3 rolled, duplicate the die.
  *   Wizard:  Exploding shots. For any 6 rolled, count the 6 and re-roll. Continue as 
  *            long as 6s are rolled.
+ * 
+ * Mathematical analysis of expected values of a single die roll:
+ *   Fighter: Starts at 4, degrades to 3+2/3
+ *   Rogue:   Starts at 4+1/3, degrades to 3+1/6
+ *   Wizard:  Starts at 4+1/5, degrades to 3+1/30
  * 
  * @author James Vanderhyde
  */
