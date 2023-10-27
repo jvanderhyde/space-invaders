@@ -3,6 +3,8 @@
 //Modified by James Vanderhyde, 12 November 2018
 //  Removed explicit call to load JDBC driver
 //  Used try-with-resources
+//Modified by James Vanderhyde, 27 October 2023
+//  Changed the server name
 
 package edu.sxu.databases.invaders.backend;
 
@@ -20,7 +22,7 @@ public class JdbcTest
     public static void main(String[] args)
     {
         //Establish database connection
-        final String url = "jdbc:mysql://csmaster.sxu.edu/hafh";
+        final String url = "jdbc:mysql://cs.sxu.edu/hafh";
         final String username = prompt("Username: ");
         final String password = promptHidden("Password: ");
         try (Connection conn = DriverManager.getConnection(url, username, password))
